@@ -14,11 +14,6 @@ import os
 import platform
 import json
 from kivy.core.window import Window
-Window.size = (400, 850)
-Window.keyboard_anim_args ={'d': .2, 't': 'in_out_expo'}
-Window.softinput_mode = "below_target"    
-Window.left = 0
-Window.top = 0
 # Vérifier si le système est Windowse
 if platform.system() == 'Windows':
     os.environ['KIVY_GL_BACKEND'] = 'angle_sdl2'
@@ -255,27 +250,3 @@ class basketball_manager(MDApp):
         self.manager.close()
 if __name__=="__main__":
     basketball_manager().run()
-
-
-#  # Copier le fichier vers le répertoire de l'application
-#         self.copy_file_to_app_directory(self.path)
-
-#         # Fermer le gestionnaire de fichiers
-#         self.manager.close()
-
-#     def copy_file_to_app_directory(self, source_path):
-#         # Chemin du répertoire de l'application
-#         app_directory = os.getcwd()  # Obtient le répertoire actuel de l'application
-
-#         # Récupérer le nom du fichier à partir du chemin
-#         file_name = os.path.basename(source_path)
-
-#         # Chemin de destination dans le répertoire de l'application
-#         destination_path = os.path.join(app_directory, file_name)
-
-#         try:
-#             # Copier le fichier vers le répertoire de l'application
-#             shutil.copy(source_path, destination_path)
-#             self.label.text += f"\nFichier copié vers : {destination_path}"
-#         except Exception as e:
-#             self.label.text = f"Erreur: {e}"
