@@ -1,0 +1,116 @@
+<Player@MDFloatLayout>:
+    radius: [20, ]
+    md_bg_color: "gray"
+    image_source: ""
+    name: ""
+    rang: ""
+    size_hint: .5, .25
+    pos_hint: {"center_x": .5, "center_y": .5}
+    MDFlatButton:
+        theme_text_color: "Custom"
+        bold: True
+        # md_bg_color: "black"
+        size_hint: 0.9, 0.9
+        pos_hint: {"center_x": .5, "center_y": .5}
+        halign: "center"
+        radius: [20, ]
+        on_release:
+            app.show_player(root.name, root.rang)
+    FitImage:
+        source: root.image_source
+        pos_hint: {"center_x": .5, "center_y": .5}
+        size_hint: 0.95, 0.95
+        radius: [20, ]
+    MDLabel:
+        text: root.name + "#"+ root.rang
+        theme_text_color: "Custom"
+        bold: True
+        font_size: "20sp"
+        text_color: "black"
+        halign: "center"
+        size_hint: 0.7, .2
+        md_bg_color:  1, 0.5, 0.2, 1
+        pos_hint: {"center_x": .5, "center_y": .25}
+    
+MDScreen:
+    name: "Acceuil"
+    user_name_and_salut:user_name_and_salut
+    players_list:players_list
+    MDFloatLayout:
+        pos_hint: {"center_x": .5, "center_y": .5}
+        FitImage:
+            source: "WaTurc.jpg"
+            pos_hint: {"center_x": .5, "center_y": .5}
+        MDFloatLayout:
+            md_bg_color: 0, 0, 0, 0.5
+            pos_hint: {"center_x": .5, "center_y": .5}
+            MDFloatLayout:
+                size_hint_y: .2
+                pos_hint: {"center_x": .5, "center_y": .9}
+                MDLabel:
+                    id: user_name_and_salut
+                    text: f"Salut Alex Normane"
+                    theme_text_color: "Custom"
+                    bold: True
+                    font_size: "25sp"
+                    text_color: "white"
+                    pos_hint: {"x": .05, "center_y": .75}
+                MDLabel:
+                    text: "Liste des joueurs avec leurs compétances"
+                    theme_text_color: "Custom"
+                    font_size: "15sp"
+                    text_color: "white"
+                    size_hint_x: 0.5
+                    pos_hint: {"x": .05, "center_y": .45}
+                MDIconButton:
+                    icon: "cog-outline"
+                    theme_text_color: "Custom"
+                    text_color: "white"
+                    icon_size: "40sp"
+                    pos_hint: {"center_x": .9, "center_y": .75}
+                    on_release:
+                        root.manager.transition.direction = "left"
+                        root.manager.current = "parameter"
+                MDRectangleFlatIconButton:
+                    icon: "plus"
+                    text: "Ajouter un jouer"
+                    theme_text_color: "Custom"
+                    text_color: "white"
+                    icon_color: "white"
+                    line_color: 1, 0.4, 0.1, 0.8
+                    font_size: "20sp"
+                    md_bg_color:   1, 0.4, 0.1, 0.8
+                    size_hint: .1, .3
+                    pos_hint: {"center_x": .7, "center_y": .28}
+                    on_release:
+                        root.manager.transition.direction = "left"
+                        root.manager.current = "add"
+
+            MDLabel:
+                text: "JOUEURS"
+                theme_text_color: "Custom"
+                text_color: "white"
+                pos_hint: {"center_x": .5, "center_y": .75}
+                halign: "center"
+                bold: True
+                font_size: "25sp"
+                        
+
+        MDFloatLayout:
+            md_bg_color: "white"
+            size_hint: .95, 0.72
+            radius: [20, ]
+            pos_hint: {"center_x": .5, "top": .7}
+            ScrollView:
+                do_scroll_y: True
+                do_scroll_x: False
+                pos_hint: {"center_x": .5, "top": 1}
+                size_hint_y: 0.95
+                MDGridLayout:
+                    cols: 2
+                    padding: 5
+                    spacing: 10
+                    size_hint_y: 2
+                    pos_hint: {"center_x": .5, "top": .3}
+                    id: players_list
+                    

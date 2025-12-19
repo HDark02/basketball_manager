@@ -1,0 +1,162 @@
+MDScreen:
+    name: "player_data"
+    player_name:player_name
+    player_rang:player_rang
+    list_data:list_data
+    sc:sc
+    player_profile:player_profile
+    MDFloatLayout:
+        md_bg_color: "white"
+        pos_hint: {"center_x": .5, "center_y": .5}
+        FitImage:
+            id: player_profile
+            source: "WaTurc.jpg"
+            pos_hint: {"center_x": .8, "center_y": .88}
+            size_hint: .3, .15
+            radius: [20, ]
+        MDLabel:
+            id: player_name
+            text: "Michael Jordan"
+            theme_text_color: "Custom"
+            bold: True
+            font_size: "25sp"
+            text_color: "black"
+            pos_hint: {"x": .05, "center_y": .95}
+        MDLabel:
+            id: player_rang
+            text: "Rang #1"
+            theme_text_color: "Custom"
+            font_size: "25sp"
+            text_color: "black"
+            pos_hint: {"x": .2, "center_y": .89}
+        MDLabel:
+            text: "Compétences"
+            theme_text_color: "Custom"
+            halign: "left"
+            font_size: "25sp"
+            text_color: "black"
+            opacity: .7
+            bold: True
+            pos_hint: {"x": .1, "center_y": .8}
+        MDGridLayout:
+            cols: 2
+            rows: 4
+            size_hint: .9, .3
+            pos_hint: {"x": .1, "center_y": .6}
+            id: list_data
+            tir_id:tir_id
+            pas_id:pas_id
+            def_id:def_id
+            dbl_id:dbl_id
+            MDLabel:
+                text: "Tir"
+                theme_text_color: "Custom"
+                font_size: "20sp"
+                text_color: "gray"
+            MDLabel:
+                id: tir_id
+                text: "8/10"
+                theme_text_color: "Custom"
+                font_size: "20sp"
+                bold: True
+                halign: "center"
+                text_color: "black"
+            MDLabel:
+                text: "Défense"
+                theme_text_color: "Custom"
+                font_size: "20sp"
+                text_color: "gray"
+            MDLabel:
+                id: def_id
+                text: "8/10"
+                theme_text_color: "Custom"
+                font_size: "20sp"
+                halign: "center"
+                bold: True
+                text_color: "black"
+            MDLabel:
+                text: "Passe"
+                theme_text_color: "Custom"
+                font_size: "20sp"
+                text_color: "gray"
+            MDLabel:
+                id: pas_id
+                text: "8/10"
+                theme_text_color: "Custom"
+                font_size: "20sp"
+                halign: "center"
+                bold: True
+                text_color: "black"
+            MDLabel:
+                text: "Dribble"
+                theme_text_color: "Custom"
+                font_size: "20sp"
+                text_color: "gray"
+            MDLabel:
+                id: dbl_id
+                text: "8/10"
+                theme_text_color: "Custom"
+                font_size: "20sp"
+                halign: "center"
+                bold: True
+                text_color: "black"
+        MDGridLayout:
+            cols: 2
+            rows: 1
+            size_hint: .9, .1
+            padding: 10
+            spacing: 10
+            pos_hint: {"x": .1, "center_y": .4}
+            id: sc
+            total_id:total_id
+            MDLabel:
+                text: "Score total"
+                theme_text_color: "Custom"
+                font_size: "30sp"
+                text_color: "black"
+            MDLabel:
+                id: total_id
+                text: "32/40"
+                theme_text_color: "Custom"
+                font_size: "30sp"
+                halign: "center"
+                bold: True
+                text_color: 1, 0.4, 0.1, 0.8
+        MDGridLayout:
+            cols: 2
+            rows: 1
+            size_hint: .9, .1
+            padding: 10
+            spacing: 10
+            pos_hint: {"center_x": .5, "center_y": .1}
+            MDRectangleFlatButton:
+                text: "Ok"
+                theme_text_color: "Custom"
+                text_color:  1, 0.4, 0.1, 0.8
+                line_color: 1, 0.4, 0.1, 0.8
+                font_size: "20sp"
+                size_hint: 1, 1
+                on_release:
+                    root.manager.transition.direction = "right"
+                    root.manager.current = "Acceuil"
+            MDRectangleFlatButton:
+                text: "Modifier"
+                theme_text_color: "Custom"
+                text_color: "white"
+                bold: True
+                line_color: 1, 0.4, 0.1, 0.8
+                font_size: "20sp"
+                size_hint: 1, 1
+                md_bg_color: 1, 0.4, 0.1, 0.8
+                on_release:
+                    prenom, nom = app.handle_name(player_name)
+                    print(nom)
+                    print(prenom)
+                    root.manager.get_screen("add").prenom.text = prenom
+                    root.manager.get_screen("add").nom.text = nom
+                    root.manager.get_screen("add").list_data_.tir_bar.value = int(root.list_data.tir_id.text.replace("/10", ""))*10
+                    root.manager.get_screen("add").list_data_.pas_bar.value = int(root.list_data.pas_id.text.replace("/10", ""))*10
+                    root.manager.get_screen("add").list_data_.def_bar.value = int(root.list_data.def_id.text.replace("/10", ""))*10
+                    root.manager.get_screen("add").list_data_.dbl_bar.value = int(root.list_data.dbl_id.text.replace("/10", ""))*10
+                    root.manager.transition.direction = "left"
+                    root.manager.current = "add"

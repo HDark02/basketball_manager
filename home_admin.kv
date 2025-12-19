@@ -1,0 +1,537 @@
+<Lang_1@MDCard>:
+    size_hint: .85, .1
+    radius: [20, ]
+    md_bg_color: 1, 1, 1, .25
+    elevation: 4
+    lang_list_id:lang_list_id
+    lang_print: lang_print
+    MDFloatLayout:
+        MDIcon:
+            icon: "account"
+            pos_hint: {"center_x": .1, "center_y": .5}
+            font_size: "25sp"
+        MDTextButton:
+            id: lang_print
+            text: lang_list_id.text
+            pos_hint: {"center_x": .3, "center_y": .5}
+            font_size: "20sp"
+            theme_text_color: "Custom"
+            text_color: "white"
+        MDTextButton:
+            text: "1000000 XOF"
+            pos_hint: {"center_x": .8, "center_y": .5}
+            font_size: "15sp"
+            theme_text_color: "Custom"
+            text_color: "white"
+        Spinner:
+            id: lang_list_id
+            text: "Afrikaans"
+            radius: [20, ]
+            values: ["alex","food"]
+            opacity: 0
+            pos_hint: {"center_x": .5, "center_y": .5}
+<Compte_line@OneLineIconListItem>:
+    text: ""
+    theme_text_color: "Custom"
+    text_color: "white"
+    bold: True
+    on_release: print("Dorcas")
+    icon_compte: ""
+    text_solde: ""
+    IconLeftWidget:
+        icon: root.icon_compte
+        theme_text_color: "Custom"
+        text_color: "white"
+    MDLabel:
+        text: root.text_solde
+        theme_text_color: "Custom"
+        text_color: "white"
+        bold: True
+        size_hint: .5, 1
+        pos_hint: {"center_x": .85, "center_y": .5}
+        halign: "left"
+        font_size: "18sp"
+
+MDScreen:
+    name: "Acceuil"
+    MDBottomNavigation:
+        # md_bg_color: "white"
+        pos_hint: {"center_x": .5, "y": 0}
+        panel_color:  0, 0, 0, .8
+        # selected_color_background: "red"
+        text_color_active: "white"
+        text_color_normal: 1, 1, 1, 4
+        MDBottomNavigationItem:
+            name: "home"
+            text: "home"
+            icon: "home"
+            
+            Home_screen:
+                id: home_id
+        MDBottomNavigationItem:
+            name: "rapport"
+            text: "Rapport"
+            icon: "book-open-variant"
+            Rapport_screen:
+                id: rapport_id
+        MDBottomNavigationItem:
+            name: "Ajouter"
+            text: "Ajouter"
+            icon: "plus-box"
+            Ajouter_screen:
+        MDBottomNavigationItem:
+            name: "Exporter"
+            text: "Exporter"
+            icon: "upload-outline"
+            Comptes_screen:
+                id: comptes_id
+        MDBottomNavigationItem:
+            name: "Comptes"
+            text: "Comptes"
+            icon: "account-cash"
+            Comptes_screen:
+                id: comptes_id
+
+<Home_screen@MDScreen>:
+    name: "screen 1"
+    MDFloatLayout:
+        md_bg_color: 0, 0, 0, 0.9
+        MDFloatLayout:
+            md_bg_color: "black"#1, 1, 1, .05
+            pos_hint: {"center_x": .5, "top": 1}
+            size_hint: 1, .07
+            MDIconButton:
+                icon: "account-outline"
+                theme_text_color: "Custom"
+                text_color: "white"
+                pos_hint: {"center_x": .1, "center_y": .5}
+            MDLabel:
+                text: "restaurant chez Brïm".upper()
+                theme_text_color: "Custom"
+                bold: True
+                text_color: "white"
+                pos_hint: {"center_x": .5, "center_y": .5}
+                halign: "center"
+            MDIconButton:
+                icon: "book-open-variant"
+                theme_text_color: "Custom"
+                text_color: "white"
+                pos_hint: {"center_x": .9, "center_y": .5}
+        MDFloatLayout:
+            md_bg_color: "black"
+            size_hint: .9, .2
+            radius: [20, ]
+            pos_hint: {"center_x": .5, "center_y": .79}
+            MDLabel:
+                text: "Total des fonds"
+                theme_text_color: "Custom"
+                text_color: "white"
+                pos_hint: {"center_x": .5, "center_y": .85}
+                halign: "center"
+                font_size: "14sp"
+            MDLabel:
+                text: "57,2 USD"
+                theme_text_color: "Custom"
+                text_color: "white"
+                bold: True
+                pos_hint: {"center_x": .5, "center_y": .5}
+                halign: "center"
+                font_size: "35sp"
+            MDFlatButton:
+                text: "Ajouter des fonds"
+                theme_text_color: "Custom"
+                text_color: "white"
+                bold: True
+                md_bg_color: "blue"
+                size_hint: .8, .08
+                pos_hint: {"center_x": .5, "center_y": .2}
+                halign: "center"
+                font_size: "14sp"
+        MDFloatLayout:
+            md_bg_color: "black"
+            pos_hint: {"center_x": .5, "center_y": .58}
+            size_hint: .9, .15
+            radius: [20, ]
+            MDFlatButton:
+                text: ""
+                on_release: print("boot")
+                pos_hint: {"center_x": .5, "center_y": .5}
+                size_hint: 1, 1
+            MDLabel:
+                text: "Votre progression"
+                theme_text_color: "Custom"
+                text_color: "white"
+                bold: True
+                size_hint: .8, .5
+                pos_hint: {"center_x": .45, "center_y": .75}
+                halign: "left"
+                font_size: "14sp"
+            MDIcon:
+                icon: "chevron-right"
+                theme_text_color: "Custom"
+                text_color: "white"
+                bold: True
+                size_hint: .8, .5
+                pos_hint: {"center_x": .9, "center_y": .75}
+                font_size: "14sp"
+            MDLabel:
+                text: "Tâches terminées"
+                theme_text_color: "Custom"
+                text_color: "white"
+                bold: True
+                size_hint: .8, .5
+                pos_hint: {"center_x": .45, "center_y": .5}
+                halign: "left"
+                font_size: "12sp"
+            MDFloatLayout:
+                md_bg_color: "yellow"
+                size_hint: .15, .2
+                radius: [15, ]
+                pos_hint: {"center_x": .9, "center_y": .5}
+                MDLabel:
+                    text: "1/10"
+                    theme_text_color: "Custom"
+                    text_color: "black"
+                    bold: True
+                    halign: "center"
+                    pos_hint: {"center_x": .5, "center_y": .5}
+                    font_size: "14sp"
+            MDProgressBar:
+                value: 10
+                color: "white"
+                md_bg_color: "white"
+                pos_hint: {"center_x": .5, "center_y": .2}
+                size_hint: .9, .1
+        MDFloatLayout:
+            md_bg_color: "black"
+            pos_hint: {"center_x": .5, "top": .5}
+            size_hint: .9, .4
+            radius: [20,]
+            MDLabel:
+                text: "Comptes"
+                theme_text_color: "Custom"
+                text_color: "white"
+                bold: True
+                size_hint: .8, .5
+                pos_hint: {"center_x": .2, "center_y": .9}
+                halign: "center"
+                font_size: "25sp"
+            MDTextButton:
+                text: "Voir tout"
+                theme_text_color: "Custom"
+                text_color: "white"
+                bold: True
+                size_hint: .8, .5
+                pos_hint: {"center_x": .5, "center_y": .9}
+                halign: "right"
+                font_size: "14sp"
+            MDIcon:
+                icon: "chevron-right"
+                theme_text_color: "Custom"
+                text_color: "white"
+                bold: True
+                size_hint: .8, .5
+                pos_hint: {"center_x": .95, "center_y": .9}
+            MDFloatLayout:
+                pos_hint: {"center_x": .4, "center_y": .8}
+                size_hint: .95, .1
+                md_bg_color: "black"
+                pos_hint: {"center_x": .5, "center_y": .8}
+                MDLabel:
+                    text: "Photo"
+                    theme_text_color: "Custom"
+                    text_color: "white"
+                    bold: True
+                    halign: "center"
+                    font_size: "14sp"
+                    pos_hint: {"center_x": .1, "center_y": .5}
+
+                MDLabel:
+                    text: "Nom"
+                    theme_text_color: "Custom"
+                    text_color: "white"
+                    bold: True
+                    halign: "center"
+                    font_size: "14sp"
+                    pos_hint: {"center_x": .3, "center_y": .5}
+
+                MDLabel:
+                    text: "Solde"
+                    theme_text_color: "Custom"
+                    text_color: "white"
+                    bold: True
+                    halign: "center"
+                    font_size: "14sp"
+                    pos_hint: {"center_x": .7, "center_y": .5}
+
+            MDFloatLayout:
+                size_hint: 1, .7
+                # md_bg_color: "red"
+                pos_hint: {"center_x": .5, "center_y": .4}
+
+                ScrollView:
+                    do_scroll_y: True
+                    do_scroll_x: False
+                    scroll_y: .2
+                    pos_hint: {"center_x": .5, "top": 1}
+                    size_hint_y: 1
+                    MDList:
+                        md_bg_color: "black"
+                        # size_hint_y: 4
+                        pos_hint: {"center_x": .5, "center_y": .5}
+                        font_size: "18sp"
+                                        
+                        Compte_line:
+                            icon_compte: "account"
+                            text: "Alex"
+                            text_solde: "200000 XOF"
+                        Compte_line:
+                            icon_compte: "account"
+                            text: "Dorcas"
+                            text_solde: "52000 XOF"
+                        Compte_line:
+                            icon_compte: "account"
+                            text: "Nathalie"
+                            text_solde: "85000 XOF"
+                        Compte_line:
+                            icon_compte: "account"
+                            text: "Alex"
+                            text_solde: "200000 XOF"
+                        Compte_line:
+                            icon_compte: "account"
+                            text: "Dorcas"
+                            text_solde: "52000 XOF"
+                        Compte_line:
+                            icon_compte: "account"
+                            text: "Nathalie"
+                            text_solde: "85000 XOF"
+                        Compte_line:
+                            icon_compte: "account"
+                            text: "Alex"
+                            text_solde: "200000 XOF"
+                        Compte_line:
+                            icon_compte: "account"
+                            text: "Dorcas"
+                            text_solde: "52000 XOF"
+                        Compte_line:
+                            icon_compte: "account"
+                            text: "Nathalie"
+                            text_solde: "85000 XOF"
+
+
+<Rapport_screen@MDScreen>:
+    
+<Ajouter_screen@MDScreen>:
+    name: "ajouter"
+    MDFloatLayout:
+        md_bg_color: "black"
+        MDFloatLayout:
+            md_bg_color: "black"#1, 1, 1, .05
+            pos_hint: {"center_x": .5, "top": 1}
+            size_hint: 1, .07
+            MDIconButton:
+                icon: "account-outline"
+                theme_text_color: "Custom"
+                text_color: "white"
+                pos_hint: {"center_x": .1, "center_y": .5}
+            MDLabel:
+                text: "Dépôt"
+                theme_text_color: "Custom"
+                bold: True
+                text_color: "white"
+                pos_hint: {"center_x": .5, "center_y": .5}
+                halign: "center"
+            MDIconButton:
+                icon: "book-open-variant"
+                theme_text_color: "Custom"
+                text_color: "white"
+                pos_hint: {"center_x": .9, "center_y": .5}
+        MDFloatLayout:
+            md_bg_color: 1, 1, 1, 0.1
+            size_hint: .9, .2
+            radius: [20, ]
+            pos_hint: {"center_x": .5, "center_y": .8}
+            MDLabel:
+                text: "Le solde du compte"
+                theme_text_color: "Custom"
+                text_color: "white"
+                pos_hint: {"center_x": .5, "center_y": .85}
+                halign: "center"
+                font_size: "14sp"
+            MDLabel:
+                text: "7,2 USD"
+                theme_text_color: "Custom"
+                text_color: "white"
+                bold: True
+                pos_hint: {"center_x": .5, "center_y": .5}
+                halign: "center"
+                font_size: "35sp"
+            MDLabel:
+                text: "Date du jour: Mar 25/07/2025"
+                theme_text_color: "Custom"
+                text_color: "white"
+                bold: True
+                pos_hint: {"center_x": .5, "center_y": .15}
+                halign: "center"
+                font_size: "18sp"
+            
+        MDFloatLayout:
+            md_bg_color: "black"
+            pos_hint: {"center_x": .5, "top": .7}
+            size_hint: 1, .8
+            radius: [20, ]
+            MDLabel:
+                text: "Montant"
+                theme_text_color: "Custom"
+                text_color: "white"
+                pos_hint: {"center_x": .5, "center_y": .95}
+                halign: "center"
+                font_size: "20sp"
+            MDTextField:
+                hint_text: "Entrez le montant"
+                pos_hint: {"center_x": .5, "center_y": .8}
+                font_size: "20sp"
+                size_hint: .8, .1
+                theme_text_color: "Custom"
+                mode: "rectangle"
+                multiline: True
+                hint_text_color_normal: "white"
+                hint_text_color_focus: "white"
+                # fill_color_focus: 1, 1, 1, 0
+                # fill_color_normal: 1, 1, 1, 0
+                # text: "good mord"
+                text_color_focus: "white"
+                text_color_normal: 1, 1, 1, 0.8
+                line_color_focus: 1, 1, 1, 1
+                line_color_normal: 1, 1, 1, 0.1
+            MDLabel:
+                text: "XOF"
+                theme_text_color: "Custom"
+                pos_hint: {"center_x": .8, "center_y": .8}
+                text_color: "white"
+                halign: "center"
+                font_size: "20sp"
+            Lang_1:
+                pos_hint: {"center_x": .5, "center_y": .6}
+            MDFlatButton:
+                text: "Ajouter le montant"
+                theme_text_color: "Custom"
+                text_color: "white"
+                bold: True
+                md_bg_color: 1, 1, 1, 0.2
+                size_hint: .8, .08
+                pos_hint: {"center_x": .5, "center_y": .2}
+                halign: "center"
+                font_size: "20sp"
+<Comptes_screen@MDScreen>:
+    name: "compte"
+    MDFloatLayout:
+        md_bg_color: "black"
+        MDFloatLayout:
+            md_bg_color: "black"#1, 1, 1, .05
+            pos_hint: {"center_x": .5, "top": 1}
+            size_hint: 1, .07
+            MDIconButton:
+                icon: "account-outline"
+                theme_text_color: "Custom"
+                text_color: "white"
+                pos_hint: {"center_x": .1, "center_y": .5}
+            MDLabel:
+                text: "Comptes"
+                theme_text_color: "Custom"
+                bold: True
+                text_color: "white"
+                pos_hint: {"center_x": .5, "center_y": .5}
+                halign: "center"
+            MDIconButton:
+                icon: "book-open-variant"
+                theme_text_color: "Custom"
+                text_color: "white"
+                pos_hint: {"center_x": .9, "center_y": .5}
+        MDFloatLayout:
+            md_bg_color: 1, 1, 1, 0.1
+            size_hint: .9, .2
+            radius: [20, ]
+            pos_hint: {"center_x": .5, "center_y": .8}
+            MDLabel:
+                text: "Total des fonds"
+                theme_text_color: "Custom"
+                text_color: "white"
+                pos_hint: {"center_x": .5, "center_y": .85}
+                halign: "center"
+                font_size: "14sp"
+            MDLabel:
+                text: "57,2 USD"
+                theme_text_color: "Custom"
+                text_color: "white"
+                bold: True
+                pos_hint: {"center_x": .5, "center_y": .5}
+                halign: "center"
+                font_size: "35sp"
+            
+        MDFloatLayout:
+            md_bg_color: "black"
+            pos_hint: {"center_x": .5, "top": .7}
+            size_hint: 1, .8
+            radius: [20, ]
+            MDLabel:
+                text: "Aperçu"
+                theme_text_color: "Custom"
+                text_color: "white"
+                pos_hint: {"center_x": .5, "center_y": .95}
+                halign: "center"
+                font_size: "20sp"
+            MDFloatLayout:
+                size_hint: 1, .9
+                # md_bg_color: "red"
+                pos_hint: {"center_x": .5, "top": .9}
+                ScrollView:
+                    do_scroll_y: True
+                    do_scroll_x: False
+                    scroll_y: 1
+                    pos_hint: {"center_x": .5, "top": 1}
+                    size_hint_y: 1
+                    MDList:
+                        md_bg_color: "black"
+                        # size_hint_y: 4
+                        pos_hint: {"center_x": .5, "center_y": .5}
+                        font_size: "18sp"
+                                        
+                        Compte_line:
+                            icon_compte: "account"
+                            text: "Alex"
+                            text_solde: "200000 XOF"
+                        Compte_line:
+                            icon_compte: "account"
+                            text: "Dorcas"
+                            text_solde: "52000 XOF"
+                        Compte_line:
+                            icon_compte: "account"
+                            text: "Nathalie"
+                            text_solde: "85000 XOF"
+                        Compte_line:
+                            icon_compte: "account"
+                            text: "Alex"
+                            text_solde: "200000 XOF"
+                        Compte_line:
+                            icon_compte: "account"
+                            text: "Dorcas"
+                            text_solde: "52000 XOF"
+                        Compte_line:
+                            icon_compte: "account"
+                            text: "Nathalie"
+                            text_solde: "85000 XOF"
+                        Compte_line:
+                            icon_compte: "account"
+                            text: "Alex"
+                            text_solde: "200000 XOF"
+                        Compte_line:
+                            icon_compte: "account"
+                            text: "Dorcas"
+                            text_solde: "52000 XOF"
+                        Compte_line:
+                            icon_compte: "account"
+                            text: "Nathalie"
+                            text_solde: "85000 XOF"
+
+#######################################""""""

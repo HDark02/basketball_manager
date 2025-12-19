@@ -1,0 +1,61 @@
+Screen:
+    name: "welcome"
+	MDFloatLayout:
+    	pos_hint: {"center_x": .5, "center_y": .5}
+        FitImage:
+            source: "WaTurc.jpg"
+            pos_hint: {"center_x": .5, "center_y": .5}
+        MDFloatLayout:
+        	md_bg_color: 0, 0, 0, 0.5
+    	    pos_hint: {"center_x": .5, "center_y": .5}
+            FitImage:
+                # md_bg_color: "white"
+                radius: [20, ]
+                size_hint: .3, .15
+                source: "VHA6WA9.jpg"
+                pos_hint: {"center_x": .5, "center_y": .7}
+            MDLabel:
+                text: "Basketball Manager ".upper()
+                theme_text_color: "Custom"
+                text_color: "white"
+                pos_hint: {"center_x": .5, "center_y": .55}
+                halign: "center"
+                bold: True
+                font_size: "45sp"
+            MDLabel:
+                text: "Gérer vos joueurs et leurs compétences"
+                theme_text_color: "Custom"
+                text_color: "white"
+                pos_hint: {"center_x": .5, "center_y": .45}
+                halign: "center"
+                font_size: "18sp"
+                opacity: .8
+            
+            MDRaisedButton:
+                text: "Se connecter"
+                pos_hint: {"center_x": .5, "center_y": .3}
+                halign: "center"
+                font_size: "25sp"
+                bold: True
+                size_hint: .8, .07
+                theme_text_color: "Custom"
+                text_color: "red"
+                opacity: 3
+                radius: [20, ]
+                md_bg_color: 1, 1, 1, .3
+                on_release: app.login(id=4)
+            
+            MDRectangleFlatButton:
+                text: "S'inscrire"
+                pos_hint: {"center_x": .5, "center_y": .2}
+                halign: "center"
+                font_size: "25sp"
+                bold: True
+                size_hint: .8, .07
+                theme_text_color: "Custom"
+                text_color: "white"
+                opacity: 3
+                line_color: "white"
+                # md_bg_color: 1, 1, 1, 0.1
+                on_release: app.login(id=2)
+                

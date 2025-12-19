@@ -1,0 +1,147 @@
+MDScreen:
+    name: "sign_up"
+	title_enter:title_enter
+	user_name:user_name
+	user_password:user_password
+	user_repassword_confirm:user_repassword_confirm
+	user_mail: user_mail
+	# picture:picture
+	# icon_add:icon_add
+	# ajouter_photo:ajouter_photo
+	enr:enr
+	MDFloatLayout:
+        pos_hint: {"center_x": .5, "center_y": .5}
+        FitImage:
+            source: "WaTurc.jpg"
+            pos_hint: {"center_x": .5, "center_y": .5}
+        MDFloatLayout:
+        	md_bg_color: 0, 0, 0, 0.5
+			pos_hint: {"center_x": .5, "center_y": .5}
+			MDIconButton:
+				icon: "arrow-left"
+				pos_hint: {"center_x": .1, "center_y": .95}
+				theme_text_color: "Custom"
+				text_color: "white"
+				halign: "center"
+				font_size: "25sp"
+				size_hint: .2, .07
+				on_release:
+        			root.manager.transition.direction = "right"
+					root.manager.current = "welcome"
+			MDLabel:
+				id: title_enter
+				text: "Inscription"
+				theme_text_color: "Custom"
+				text_color: "white"
+				pos_hint: {"x": .1, "center_y": .9}
+				bold: True
+				font_size: "25sp"
+			MDLabel:
+				text: "Créez votre compte"
+				theme_text_color: "Custom"
+				text_color: "white"
+				pos_hint: {"x": .1, "center_y": .85}
+				bold: True
+				font_size: "18sp"
+				opacity: .7
+			MDFloatLayout:
+				md_bg_color : "black"
+				pos_hint: {"center_x": .5, "center_y": .35}
+				size_hint: .9, .6
+				Input_cart:
+					id: user_name
+					hint_text: "Nom complet"
+					pos_y: .9
+				Input_cart:
+					id: user_mail
+					hint_text: "Email"
+					pos_y: .72
+				Input_cart:
+					id: user_password
+					hint_text: "Mot de passe"
+					pos_y: .54
+					password: True
+				MDIconButton:
+					icon: "eye-off"
+					halign: "right"
+					theme_text_color: "Custom"
+					text_color: "blue"
+					pos_hint: {"right": .9, "center_y": .54}
+					on_release:
+    					self.icon = "eye" if self.icon == "eye-off" else "eye-off" 
+    					user_password.password = not user_password.password
+				Input_cart:
+					id: user_repassword_confirm
+					hint_text: "Confirmer le Mot de passe"
+					pos_y: .39
+					password: True
+				MDIconButton:
+    				icon: "eye-off"
+					halign: "right"
+					theme_text_color: "Custom"
+					text_color: "blue"
+					pos_hint: {"right": .9, "center_y": .39}
+					on_release:
+    					self.icon = "eye" if self.icon == "eye-off" else "eye-off" 
+    					user_repassword_confirm.password = not user_repassword_confirm.password
+				MDRaisedButton:
+					id: enr
+					text: "S'inscrire"
+					size_hint: .8, .07
+					font_size: "25sp"
+					theme_text_color: "Custom"
+					text_color: "white"
+					md_bg_color: 1, 0.4, 0.1, 0.8
+					bold: True
+					pos_hint: {"center_x": .5, "center_y": .2}
+					on_release: app.sign_in(user_name.text, user_mail.text, user_password.text, user_repassword_confirm.text)
+				MDProgressBar:
+					pos_hint: {"center_x": .5, "center_y": .12}
+					value: 100
+					size_hint: .5, None
+					halign: "center"
+					theme_text_color: "Custom"
+					color: "white"
+				MDTextButton:
+					text: "Déja un compte?"
+					theme_text_color: "Custom"
+					text_color: "white"
+					pos_hint: {"center_x": .3, "center_y": .075}
+					halign: "center"
+					font_size: "15sp"
+					on_release: app.login(id=3)
+				MDTextButton:
+					text: "Se connecter"
+					theme_text_color: "Custom"
+					text_color: "orange"
+					pos_hint: {"center_x": .7, "center_y": .075}
+					halign: "center"
+					font_size: "20sp"
+					opacity: 1.5
+					on_release: app.login(id=3)
+				
+
+<Input_cart@MDTextField>:
+    pos_hint: {"center_x": .5, "center_y": .8}
+	font_size: "20sp"
+	size_hint: .8, .1
+	theme_text_color: "Custom"
+	mode: "rectangle"
+	multiline: True
+	hint_text_color_normal: "white"
+	hint_text_color_focus: "white"
+	fill_color_normal: 1, 1, 1, 0
+	text_color_focus: "white"
+	text_color_normal: 1, 1, 1, 0.8
+	line_color_focus: 1, 0.4, 0.1, 0.8
+	line_color_normal: 1, 1, 1, 0.2
+    id: a
+    pos_y: .1
+	hint_text: ""
+	size_hint: .9, None
+	height: self.minimum_height
+	pos_hint: {"center_x": .5, "center_y": root.pos_y}
+	multiline: False
+	font_size: "20sp"
+	right_action_items: ["eye-check", lambda x: x]
+	right_action: [["eye-check", lambda x: x]]

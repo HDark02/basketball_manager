@@ -1,0 +1,166 @@
+MDScreen:
+    name: "add"
+    prenom:prenom
+    nom:nom
+    list_data_:list_data_
+    add_picture:add_picture
+    MDFloatLayout:
+        md_bg_color: "white"
+        pos_hint: {"center_x": .5, "center_y": .5}
+
+        MDLabel:
+            text: "Ajouter un joueur"
+            theme_text_color: "Custom"
+            bold: True
+            font_size: "25sp"
+            text_color: "black"
+            pos_hint: {"x": .05, "center_y": .95}
+        MDGridLayout:
+            cols: 2
+            rows: 1
+            size_hint: 0.9, .2
+            spacing: 15
+            padding: 10
+            # md_bg_color: "red"
+            pos_hint: {"center_x": .5, "center_y": .8}
+            MDTextField:
+                id: prenom
+                hint_text: "Prénom"
+                font_size: "20sp"
+                theme_text_color: "Custom"
+                mode: "rectangle"
+                multiline: True
+                hint_text_color_normal: "black"
+                hint_text_color_focus: "black"
+                fill_color_normal: 1, 1, 1, 0
+                text_color_focus: "black"
+                text_color_normal: "black"
+                line_color_focus:  1, 0.4, 0.1, 0.8
+                line_color_normal: 0, 0, 0, 0.5
+                height: self.minimum_height
+                multiline: False
+                font_size: "20sp"
+            MDTextField:
+                id: nom
+                hint_text: "Nom"
+                font_size: "20sp"
+                theme_text_color: "Custom"
+                mode: "rectangle"
+                multiline: True
+                hint_text_color_normal: "black"
+                hint_text_color_focus: "black"
+                fill_color_normal: 1, 1, 1, 0
+                text_color_focus: "black"
+                text_color_normal: "black"
+                line_color_focus:  1, 0.4, 0.1, 0.8
+                line_color_normal: 0, 0, 0, 0.5
+                height: self.minimum_height
+                multiline: False
+                font_size: "20sp"
+        MDRectangleFlatButton:
+            id: add_picture
+            image: ""
+            text: "Ajouter une photo"
+            theme_text_color: "Custom"
+            text_color: "white"
+            bold: True
+            line_color: 1, 0.4, 0.1, 0.8
+            font_size: "20sp"
+            size_hint: .6, .08
+            md_bg_color: 1, 0.4, 0.1, 0.8
+            pos_hint: {"center_x": .5, "center_y": .75}
+            on_release:
+                app.show_file_manager()
+        MDLabel:
+            text: "Compétences"
+            theme_text_color: "Custom"
+            halign: "left"
+            font_size: "25sp"
+            text_color: "black"
+            bold: True
+            pos_hint: {"x": .1, "center_y": .65}
+        MDGridLayout:
+            id: list_data_
+            tir_bar:tir_bar
+            pas_bar:pas_bar
+            def_bar:def_bar
+            dbl_bar:dbl_bar
+            cols: 1
+            rows: 8
+            size_hint: .9, .4
+            padding: 10
+            # md_bg_color: "red"
+            spacing: 15
+            pos_hint: {"x": .1, "center_y": .45}
+            MDLabel:
+                text: f"Tir: {int(tir_bar.value/10)}/10"
+                theme_text_color: "Custom"
+                halign: "left"
+                font_size: "18sp"
+                text_color: "black"
+            MDSlider:
+                id: tir_bar
+                value: 10
+                size_hint_y: .1
+                pos_hint: {"center_x": .5, "center_y": .5}
+            MDLabel:
+                text: f"Défense: {int(def_bar.value/10)}/10"
+                theme_text_color: "Custom"
+                halign: "left"
+                font_size: "18sp"
+                text_color: "black"
+            MDSlider:
+                id: def_bar
+                value: 10
+                size_hint_y: .1
+                pos_hint: {"center_x": .5, "center_y": .5}
+            MDLabel:
+                text: f"Passe: {int(pas_bar.value/10)}/10"
+                theme_text_color: "Custom"
+                halign: "left"
+                font_size: "18sp"
+                text_color: "black"
+            MDSlider:
+                id: pas_bar
+                value: 10
+                size_hint_y: .1
+                pos_hint: {"center_x": .5, "center_y": .5}
+            MDLabel:
+                text: f"Dribble: {int(dbl_bar.value/10)}/10"
+                theme_text_color: "Custom"
+                halign: "left"
+                font_size: "18sp"
+                text_color: "black"
+            MDSlider:
+                id: dbl_bar
+                value: 10
+                size_hint_y: .1
+                pos_hint: {"center_x": .5, "center_y": .5}
+        MDGridLayout:
+            cols: 2
+            rows: 1
+            size_hint: .9, .1
+            padding: 10
+            spacing: 10
+            pos_hint: {"center_x": .5, "center_y": .1}
+            MDRectangleFlatButton:
+                text: "Annuler"
+                theme_text_color: "Custom"
+                text_color:  1, 0.4, 0.1, 0.8
+                line_color: 1, 0.4, 0.1, 0.8
+                font_size: "20sp"
+                size_hint: 1, 1
+                on_release:
+                    root.manager.transition.direction = "right"
+                    root.manager.current = "Acceuil"
+            MDRectangleFlatButton:
+                text: "Ajouter"
+                theme_text_color: "Custom"
+                text_color: "white"
+                bold: True
+                line_color: 1, 0.4, 0.1, 0.8
+                font_size: "20sp"
+                size_hint: 1, 1
+                md_bg_color: 1, 0.4, 0.1, 0.8
+                on_release:
+                    app.add_player(add_picture.image, prenom.text, nom.text, int(tir_bar.value/10), int(def_bar.value/10), int(pas_bar.value/10), int(dbl_bar.value/10))
