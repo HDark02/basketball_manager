@@ -66,7 +66,7 @@ Le projet est structuré comme suit :
 
 ## Capture d'écran
 
-![Exemple d'écran de l'application](screenshots/example.png)  <!-- Ajoute un lien vers une capture d'écran si tu en as -->
+![Exemple d'écran de l'application](screenshots_example.jpg)  <!-- Ajoute un lien vers une capture d'écran si tu en as -->
 
 ## Contributions
 
