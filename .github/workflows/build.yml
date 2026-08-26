@@ -121,7 +121,11 @@ jobs:
       - name: Install pip dependencies
         run: |
           pip install --upgrade pip
-          pip install buildozer cython==0.29.33 git+https://github.com/kivy/plyer.git
+          pip install kivy[base] kivy_examples --pre --extra-index-url https://kivy.org/downloads/simple/
+          pip install kivymd==1.1.1
+          python -m pip install buildozer==1.3.0
+          python -m pip install cython==0.29.33 plyer==2.1.0
+          python -m pip install plyer==2.1.0
 
       # Build with Buildozer
       - name: Build with Buildozer
