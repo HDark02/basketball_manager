@@ -8,12 +8,15 @@ from kivymd.uix.floatlayout import MDFloatLayout
 from kivymd.uix.screenmanager import ScreenManager
 from kivymd.uix.filemanager import MDFileManager
 from kivymd.toast.kivytoast.kivytoast import toast
-from android.permissions import request_permissions, Permission
+import importlib
+import platform
 
-request_permissions([
-    Permission.READ_EXTERNAL_STORAGE,
-    Permission.WRITE_EXTERNAL_STORAGE
-])
+if platform.system() == 'Android':
+    permissions = importlib.import_module('android.permissions')
+    permissions.request_permissions([
+        permissions.Permission.READ_EXTERNAL_STORAGE,
+        permissions.Permission.WRITE_EXTERNAL_STORAGE
+    ])
 Window.keyboard_anim_args ={'d': .2, 't': 'in_out_expo'}
 Window.softinput_mode = "below_target"
 import os
