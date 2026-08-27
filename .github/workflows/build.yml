@@ -1,15 +1,8 @@
-# Sample repository at https://github.com/Novfensec/SAMPLE-KIVYMD-APP
-# Tic Tac Toe Game at https://github.com/Novfensec/Tic-Tac-Toe-Android
-
-name: Android Build
+name: Build Signed APK
 
 on:
   push:
-    branches:
-      - main
-  pull_request:
-    branches:
-      - main
+    branches: [ main ]
 
 jobs:
   build:
@@ -18,163 +11,60 @@ jobs:
     steps:
       - uses: actions/checkout@v4
 
-      # Used to cache dependencies with a timeout
-      - name: Get Date
-        id: get-date
-        run: |
-          echo "date=$(date -u '+%Y%m%d')" >> $GITHUB_ENV
-        shell: bash
-
-      - name: Cache Buildozer global directory
-        uses: actions/cache@v4
-        with:
-          path: ~/.buildozer
-          key: buildozer-global-${{ runner.os }}-${{ steps.get-date.outputs.date }}-${{ hashFiles('buildozer.spec') }}
-          restore-keys: |
-            buildozer-global-${{ runner.os }}-
-
-      - name: Cache Buildozer directory in app
-        uses: actions/cache@v4
-        with:
-          path: .buildozer
-          key: ${{ runner.os }}-buildozer-${{ github.run_id }}-${{ hashFiles('buildozer.spec') }}
-          restore-keys: |
-            ${{ runner.os }}-buildozer-
-
-      - name: Cache Android SDK
-        uses: actions/cache@v4
-        with:
-          path: ~/.buildozer/android/platform/android-sdk
-          key: ${{ runner.os }}-android-sdk-${{ steps.get-date.outputs.date }}
-          restore-keys: |
-            ${{ runner.os }}-android-sdk-
-
-      - name: Cache Android NDK
-        uses: actions/cache@v4
-        with:
-          path: ~/.buildozer/android/platform/android-ndk-r25b
-          key: ${{ runner.os }}-android-ndk-${{ steps.get-date.outputs.date }}
-          restore-keys: |
-            ${{ runner.os }}-android-ndk-
-
-      # Install dependencies
-      - name: Install dependencies
-        run: |
-          sudo apt update
-          sudo apt-get install -y \
-            build-essential \
-            git \
-            ffmpeg \
-            libsdl2-dev \
-            libsdl2-image-dev \
-            libsdl2-mixer-dev \
-            libsdl2-ttf-dev \
-            libportmidi-dev \
-            libswscale-dev \
-            libavformat-dev \
-            libavcodec-dev \
-            libunwind-dev \
-            zlib1g-dev
-          sudo apt-get install -y \
-            libsqlite3-dev \
-            sqlite3 \
-            bzip2 \
-            libbz2-dev \
-            zlib1g-dev \
-            openssl \
-            libgdbm-dev \
-            libgdbm-compat-dev \
-            liblzma-dev \
-            libreadline-dev \
-            uuid-dev \
-            libgstreamer1.0 \
-            gstreamer1.0-plugins-base \
-            gstreamer1.0-plugins-good
-          sudo apt-get install -y \
-            zip \
-            unzip \
-            autoconf \
-            libtool \
-            pkg-config \
-            libncurses5-dev \
-            libncursesw5-dev \
-            libtinfo5 \
-            cmake \
-            libffi-dev \
-            libssl-dev \
-            automake
-
-      # Set up Java 17 required by Gradle
-      - name: Setup Java 17 required by Gradle
-        uses: actions/setup-java@v4
-        with:
-          distribution: 'temurin'
-          java-version: '17'
-
-      # Set up Python
-      - name: Set up Python
-        uses: actions/setup-python@v5
-        with:
-          python-version: '3.10.5'
-
-      # Install pip dependencies
-      - name: Install pip dependencies
-        run: |
-          pip install --upgrade pip
-          pip install kivy[base] kivy_examples --pre --extra-index-url https://kivy.org/downloads/simple/
-          pip install kivymd==1.1.1
-          pip install buildozer cython==0.29.33
-
-      # Decode Keystore from base64
+      # Step 1: Decode Keystore from base64
       - name: Decode Keystore
         run: |
           echo "${{ secrets.KEYSTORE_BASE64 }}" | base64 -d > android.jks
 
-      # Build with Buildozer
-      - name: Build with Buildozer
-        id: buildozer
+      # Step 1.5: Prepare FreeType
+      # Avoid downloading FreeType from Savannah because it can return HTTP 502.
+      - name: Prepare FreeType
         run: |
-          yes | buildozer -v android debug
-        # yes | buildozer -v android release
-        # run this for generating aab (Android App Bundle) [Required by google play]
+          set -e
 
-      # Build Release APK using Buildozer
+          FREETYPE_DIR="$HOME/freetype-2.14.1"
+
+          echo "Downloading FreeType 2.14.1 from GitHub..."
+
+          rm -rf "$FREETYPE_DIR"
+
+          git clone \
+            --depth 1 \
+            --branch VER-2-14-1 \
+            https://github.com/freetype/freetype.git \
+            "$FREETYPE_DIR"
+
+          test -f "$FREETYPE_DIR/CMakeLists.txt"
+
+          echo "FreeType source prepared successfully."
+
+          echo "P4A_FREETYPE_DIR=$FREETYPE_DIR" >> "$GITHUB_ENV"
+
+      # Step 2: Build Release APK using Buildozer
       - name: Build Release APK
-        run: |
-          yes | buildozer -v android release
+        uses: digreatbrian/buildozer-action@v2
+        with:
+          python-version: 3.11
+          buildozer-cmd: buildozer -v android release
 
-      # Sign the APK manually with .jks keystore
+      # Step 3: Sign the APK manually with .jks keystore
       - name: Sign the APK manually
         run: |
           APK_PATH=$(find ./bin -name "*-release-unsigned.apk" | head -n 1)
-
-          jarsigner -verbose \
-            -sigalg SHA256withRSA \
-            -digestalg SHA-256 \
+          jarsigner -verbose -sigalg SHA256withRSA -digestalg SHA-256 \
             -keystore android.jks \
             -storepass "${{ secrets.KEYSTORE_PASSWORD }}" \
             -keypass "${{ secrets.KEY_PASSWORD }}" \
-            "$APK_PATH" \
-            "${{ secrets.KEY_ALIAS }}"
+            "$APK_PATH" "${{ secrets.KEY_ALIAS }}"
 
-      # Rename the signed APK
+      # Step 4: Rename the signed APK
       - name: Rename the signed APK
         run: |
           APK_PATH=$(find ./bin -name "*-release-unsigned.apk" | head -n 1)
           NEW_APK_PATH="${APK_PATH/-unsigned/-signed}"
           mv "$APK_PATH" "$NEW_APK_PATH"
 
-      # Upload APK artifact
-      - name: Upload APK artifact
-        uses: actions/upload-artifact@v4
-        with:
-          name: package
-          path: |
-            bin/*.apk
-            bin/*.aab
-          retention-days: 3
-
-      # Upload Signed APK Artifact
+      # Step 5: Upload Signed APK Artifact
       - name: Upload Signed APK Artifact
         uses: actions/upload-artifact@v4
         with:
