@@ -37,7 +37,7 @@ version = 0.1
 
 # (list) Application requirements
 # comma separated e.g. requirements = sqlite3,kivy
-requirements = python3,kivy==2.1.0, kivymd==1.1.1, pillow, plyer, pathlib, android
+requirements = python3,kivy==2.3.1,kivymd==1.1.1,pillow, plyer, pathlib, android
 
 # (str) Custom source folders for requirements
 # Sets custom source for any requirements with recipes
@@ -96,7 +96,7 @@ android.presplash_color = olive
 # (list) Permissions
 # (See https://python-for-android.readthedocs.io/en/latest/buildoptions/#build-options-1 for all the supported syntaxes and properties)
 #android.permissions = android.permission.INTERNET, (name=android.permission.WRITE_EXTERNAL_STORAGE;maxSdkVersion=18)
-android.permissions = READ_EXTERNAL_STORAGE, WRITE_EXTERNAL_STORAGE
+# android.permissions = READ_EXTERNAL_STORAGE, WRITE_EXTERNAL_STORAGE
 # (list) features (adds uses-feature -tags to manifest)
 #android.features = android.hardware.usb.host
 android.manifest.application_attributes = android:requestLegacyExternalStorage="true"
@@ -284,7 +284,7 @@ android.accept_sdk_license = True
 
 # (list) The Android archs to build for, choices: armeabi-v7a, arm64-v8a, x86, x86_64
 # In past, was `android.arch` as we weren't supporting builds for multiple archs at the same time.
-android.archs = arm64-v8a, armeabi-v7a
+android.archs = armeabi-v7a
 
 # (int) overrides automatic versionCode computation (used in build.gradle)
 # this is not the same as app version and should only be edited if you know what you're doing
@@ -306,10 +306,10 @@ android.allow_backup = True
 # android.no-byte-compile-python = False
 
 # (str) The format used to package the app for release mode (aab or apk or aar).
-# android.release_artifact = aab
+#android.release_artifact = aab
 
 # (str) The format used to package the app for debug mode (apk or aar).
-# android.debug_artifact = apk
+#android.debug_artifact = apk
 
 #
 # Python for android (p4a) specific
