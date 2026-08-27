@@ -32,6 +32,7 @@ jobs:
           key: buildozer-global-${{ runner.os }}-${{ steps.get-date.outputs.date }}-${{ hashFiles('buildozer.spec') }}
           restore-keys: |
             buildozer-global-${{ runner.os }}-
+
       - name: Cache Buildozer directory in app
         uses: actions/cache@v4
         with:
@@ -39,6 +40,7 @@ jobs:
           key: ${{ runner.os }}-buildozer-${{ github.run_id }}-${{ hashFiles('buildozer.spec') }}
           restore-keys: |
             ${{ runner.os }}-buildozer-
+
       - name: Cache Android SDK
         uses: actions/cache@v4
         with:
@@ -46,6 +48,7 @@ jobs:
           key: ${{ runner.os }}-android-sdk-${{ steps.get-date.outputs.date }}
           restore-keys: |
             ${{ runner.os }}-android-sdk-
+
       - name: Cache Android NDK
         uses: actions/cache@v4
         with:
@@ -53,6 +56,7 @@ jobs:
           key: ${{ runner.os }}-android-ndk-${{ steps.get-date.outputs.date }}
           restore-keys: |
             ${{ runner.os }}-android-ndk-
+
       # Install dependencies
       - name: Install dependencies
         run: |
@@ -99,18 +103,19 @@ jobs:
             libffi-dev \
             libssl-dev \
             automake
+
       # Set up Java 17 required by Gradle
       - name: Setup Java 17 required by Gradle
         uses: actions/setup-java@v4
         with:
-          distribution: 'temurin'  # or 'zulu', 'liberica', etc.
+          distribution: 'temurin'
           java-version: '17'
 
       # Set up Python
       - name: Set up Python
         uses: actions/setup-python@v5
         with:
-          python-version: '3.10.5' #set your python version
+          python-version: '3.10.5'
 
       # Install pip dependencies
       - name: Install pip dependencies
@@ -119,6 +124,12 @@ jobs:
           pip install kivy[base] kivy_examples --pre --extra-index-url https://kivy.org/downloads/simple/
           pip install kivymd==1.1.1
           pip install buildozer cython==0.29.33
+
+      # Decode Keystore from base64
+      - name: Decode Keystore
+        run: |
+          echo "${{ secrets.KEYSTORE_BASE64 }}" | base64 -d > android.jks
+
       # Build with Buildozer
       - name: Build with Buildozer
         id: buildozer
@@ -127,7 +138,33 @@ jobs:
         # yes | buildozer -v android release
         # run this for generating aab (Android App Bundle) [Required by google play]
 
-      # Upload artifacts
+      # Build Release APK using Buildozer
+      - name: Build Release APK
+        run: |
+          yes | buildozer -v android release
+
+      # Sign the APK manually with .jks keystore
+      - name: Sign the APK manually
+        run: |
+          APK_PATH=$(find ./bin -name "*-release-unsigned.apk" | head -n 1)
+
+          jarsigner -verbose \
+            -sigalg SHA256withRSA \
+            -digestalg SHA-256 \
+            -keystore android.jks \
+            -storepass "${{ secrets.KEYSTORE_PASSWORD }}" \
+            -keypass "${{ secrets.KEY_PASSWORD }}" \
+            "$APK_PATH" \
+            "${{ secrets.KEY_ALIAS }}"
+
+      # Rename the signed APK
+      - name: Rename the signed APK
+        run: |
+          APK_PATH=$(find ./bin -name "*-release-unsigned.apk" | head -n 1)
+          NEW_APK_PATH="${APK_PATH/-unsigned/-signed}"
+          mv "$APK_PATH" "$NEW_APK_PATH"
+
+      # Upload APK artifact
       - name: Upload APK artifact
         uses: actions/upload-artifact@v4
         with:
@@ -136,3 +173,10 @@ jobs:
             bin/*.apk
             bin/*.aab
           retention-days: 3
+
+      # Upload Signed APK Artifact
+      - name: Upload Signed APK Artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: signed-release-apk
+          path: ./bin/*-release-signed.apk
